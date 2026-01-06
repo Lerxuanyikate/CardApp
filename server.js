@@ -39,20 +39,18 @@ app.get('/allcards', async (req, res) => {
     }
 });
 
-
 //example route add card
 app.post('/addcard', async (req, res) => {
-    const { card_name, card_pic  } = req.body;        
+    const { card_name, card_pic } = req.body;    
     try {
-        let connection = await mysql.createConnection(dbConfig);
+        let connection = await mysql.createConnection(dbConfig);    
         const [result] = await connection.execute(
             'INSERT INTO defaultdb.cards (card_name, card_pic) VALUES (?, ?)',
             [card_name, card_pic]
         );
-        res.json({ message: 'Card added successfully', cardId: result.insertId });
-    }
-    catch (err) {
+        res.status(201).json({ message: 'Card '+card_name+' added successfully'});
+    } catch (err) {
         console.error(err);
-        res.status(500).json({ error: 'Server Error for addcard' });
-    }
+        res.status(500).json({ message: 'Server Error - Could not add card'+card_name });
+    }       
 });
