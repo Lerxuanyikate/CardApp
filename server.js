@@ -41,7 +41,7 @@ app.get('/allcards', async (req, res) => {
 
 //example routeL add card
 app.post('/addcard', async (req, res) => {
-    const { name, type, rarity } = req.body;    
+    const { card_name, card_pic } = req.body;    
     try {
         let connection = await mysql.createConnection(dbConfig);    
         await connection.execute('INSERT INTO cards (card_name, card_pic) VALUES (?, ?)', [card_name, card_pic]);    
